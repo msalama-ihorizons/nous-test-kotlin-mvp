@@ -1,8 +1,7 @@
-package com.example.nousapp.list
+package com.example.nousapp.itemlist
 
-import android.os.AsyncTask
 import com.example.nousapp.data.model.NousResponse
-import com.example.robustaweather.OnFinishedListener
+import com.example.nousapp.OnFinishedListener
 
 class ItemsListPresenter(
     view: ItemsListContract.View?,

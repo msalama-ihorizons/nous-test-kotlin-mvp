@@ -1,8 +1,8 @@
-package com.example.nousapp.list
+package com.example.nousapp.itemlist
 
 import com.example.nousapp.data.model.NousResponse
-import com.example.robustaweather.OnFinishedListener
-import com.example.robustaweather.data.NousApis
+import com.example.nousapp.OnFinishedListener
+import com.example.nousapp.data.NousApis
 import com.example.robustaweather.data.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback

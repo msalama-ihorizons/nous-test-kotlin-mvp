@@ -1,4 +1,4 @@
-package com.example.nousapp.details
+package com.example.nousapp.itemdetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.example.nousapp.R
 import com.example.nousapp.data.model.Item
 import kotlinx.android.synthetic.main.fragment_item_details.*
-import kotlinx.android.synthetic.main.item_item.view.*
 
 class ItemDetailsFragment : Fragment() {
 

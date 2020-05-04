@@ -1,5 +1,4 @@
-package com.example.robustaweather.data
-
+package com.example.nousapp.data
 import com.example.nousapp.data.model.NousResponse
 import retrofit2.Call
 import retrofit2.http.GET

@@ -1,4 +1,4 @@
-package com.example.nousapp.list
+package com.example.nousapp.itemlist
 
 import android.content.Context
 import android.view.View

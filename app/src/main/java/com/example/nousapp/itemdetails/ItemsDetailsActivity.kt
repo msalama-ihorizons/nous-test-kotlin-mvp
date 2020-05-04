@@ -1,8 +1,7 @@
-package com.example.nousapp.details
+package com.example.nousapp.itemdetails
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nousapp.R

@@ -1,4 +1,4 @@
-package com.example.nousapp.list
+package com.example.nousapp.itemlist
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

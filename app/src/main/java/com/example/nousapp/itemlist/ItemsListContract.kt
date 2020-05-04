@@ -1,7 +1,7 @@
-package com.example.nousapp.list
+package com.example.nousapp.itemlist
 
+import com.example.nousapp.BaseContract
 import com.example.nousapp.data.model.Item
-import com.example.robustaweather.BaseContract
 
 interface ItemsListContract {
 
