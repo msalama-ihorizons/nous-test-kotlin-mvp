@@ -12,7 +12,7 @@ import com.example.nousapp.itemdetails.ItemsDetailsActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_items_list.*
 
-class ItemsListFragment: Fragment(), ItemsListContract.View {
+class ItemsListFragment : Fragment(), ItemsListContract.View {
 
     private val NUMBER_OF_COL = 4
     private var itemsListPresenter: ItemsListPresenter? = null
@@ -51,6 +51,7 @@ class ItemsListFragment: Fragment(), ItemsListContract.View {
         return inflater.inflate(R.layout.fragment_items_list, container, false)
 
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -68,11 +69,11 @@ class ItemsListFragment: Fragment(), ItemsListContract.View {
     }
 
     override fun hideProgress() {
-        progressLoading.visibility= View.GONE
+        progressLoading?.visibility = View.GONE
     }
 
     override fun showProgress() {
-        progressLoading.visibility= View.VISIBLE
+        progressLoading?.visibility = View.VISIBLE
     }
 
     override fun showFailureMessage(errorMessage: String?) {
