@@ -5,18 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.nousapp.R
 import com.example.nousapp.data.model.Item
+import com.example.nousapp.data.model.NousResponse
+import com.example.nousapp.data.model.Status
 import com.example.nousapp.itemdetails.ItemsDetailsActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_items_list.*
 
-class ItemsListFragment : Fragment(), ItemsListContract.View {
+class ItemsListFragment : Fragment() {
 
     private val NUMBER_OF_COL = 4
-    private var itemsListPresenter: ItemsListPresenter? = null
     private var itemsAdapter: ItemsAdapter? = null
+    private lateinit var itemListViewModel: ItemListViewModel
 
     companion object {
         fun newInstance(): ItemsListFragment {
@@ -30,7 +34,7 @@ class ItemsListFragment : Fragment(), ItemsListContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        itemsListPresenter = ItemsListPresenter(this, ItemsListFetcher())
+        itemListViewModel = ViewModelProvider(this).get(ItemListViewModel::class.java)
 
         itemsAdapter = ItemsAdapter(activity, object : ItemsAdapter.NousRecyclerItemClickListener {
             override fun onItemClick(item: Item?) {
@@ -58,31 +62,26 @@ class ItemsListFragment : Fragment(), ItemsListContract.View {
         rvItems.layoutManager = GridLayoutManager(context, NUMBER_OF_COL)
         rvItems.adapter = itemsAdapter
 
-        itemsListPresenter?.loadItems()
-    }
+        itemListViewModel.getItemsLiveData().observe(this, Observer {
+            when (it.status) {
+                Status.LOADING ->
+                    progressLoading?.visibility = View.VISIBLE
 
+                Status.SUCCESS -> {
+                    progressLoading?.visibility = View.GONE
+                    itemsAdapter?.items = it?.data?.items
+                }
 
-    override fun showItemsList(items: List<Item>?) {
-        items?.let {
-            itemsAdapter?.items = items
-        }
-    }
-
-    override fun hideProgress() {
-        progressLoading?.visibility = View.GONE
-    }
-
-    override fun showProgress() {
-        progressLoading?.visibility = View.VISIBLE
-    }
-
-    override fun showFailureMessage(errorMessage: String?) {
-        if (errorMessage != null) {
-            Snackbar.make(
-                rootLayout,
-                errorMessage,
-                Snackbar.LENGTH_LONG
-            ).show()
-        }
+                Status.ERROR -> {
+                    progressLoading?.visibility = View.GONE
+                    Snackbar.make(
+                        rootLayout,
+                        it.message.toString(),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            }
+            itemsAdapter?.items = it?.data?.items
+        })
     }
 }

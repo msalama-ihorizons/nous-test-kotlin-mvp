@@ -1,5 +1,6 @@
 package com.example.robustaweather.data
 
+import com.android.example.github.util.LiveDataCallAdapterFactory
 import com.example.nousapp.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -15,6 +16,7 @@ class ServiceBuilder {
         private val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.END_POINT)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
 
         fun<T> buildService(service: Class<T>): T{
