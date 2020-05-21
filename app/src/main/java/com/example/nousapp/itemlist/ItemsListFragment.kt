@@ -38,7 +38,8 @@ class ItemsListFragment : Fragment() {
 
         itemsAdapter = ItemsAdapter(activity, object : ItemsAdapter.NousRecyclerItemClickListener {
             override fun onItemClick(item: Item?) {
-                startActivity(ItemsDetailsActivity.newIntent(activity, item))
+               //startActivity(ItemsDetailsActivity.newIntent(activity, item))
+                itemListViewModel.refresh()
             }
 
             override fun onItemClick(position: Int) {
@@ -73,7 +74,7 @@ class ItemsListFragment : Fragment() {
                 }
 
                 Status.ERROR -> {
-                    progressLoading?.visibility = View.GONE
+                   // progressLoading?.visibility = View.GONE
                     Snackbar.make(
                         rootLayout,
                         it.message.toString(),
@@ -81,7 +82,7 @@ class ItemsListFragment : Fragment() {
                     ).show()
                 }
             }
-            itemsAdapter?.items = it?.data?.items
+            //itemsAdapter?.items = it?.data?.items
         })
     }
 }
