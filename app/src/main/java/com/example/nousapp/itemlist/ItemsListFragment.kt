@@ -69,20 +69,20 @@ class ItemsListFragment : Fragment() {
                     progressLoading?.visibility = View.VISIBLE
 
                 Status.SUCCESS -> {
-                    progressLoading?.visibility = View.GONE
                     itemsAdapter?.items = it?.data?.items
                 }
 
                 Status.ERROR -> {
-                   // progressLoading?.visibility = View.GONE
                     Snackbar.make(
                         rootLayout,
                         it.message.toString(),
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
+                Status.COMPLETE -> {
+                    progressLoading?.visibility = View.GONE
+                }
             }
-            //itemsAdapter?.items = it?.data?.items
         })
     }
 }

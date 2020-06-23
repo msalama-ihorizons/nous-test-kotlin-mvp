@@ -26,5 +26,6 @@ package com.example.nousapp.data.model
 enum class Status {
     SUCCESS,
     ERROR,
-    LOADING
+    LOADING,
+    COMPLETE
 }

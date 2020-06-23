@@ -26,6 +26,7 @@ class ItemsListFetcher {
 
         result.addSource(apiResponseLiveData) {
             response ->
+            result.value = Resource.complete(null)
             when (response) {
                 is ApiSuccessResponse -> result.value = Resource.success<NousResponse>(response.body)
                 is ApiEmptyResponse -> result.value = Resource.success(null)
