@@ -39,7 +39,7 @@ class ItemsListFragment : Fragment() {
         itemsAdapter = ItemsAdapter(activity, object : ItemsAdapter.NousRecyclerItemClickListener {
             override fun onItemClick(item: Item?) {
                //startActivity(ItemsDetailsActivity.newIntent(activity, item))
-                itemListViewModel.refresh()
+                itemListViewModel.getItems()
             }
 
             override fun onItemClick(position: Int) {
@@ -57,13 +57,17 @@ class ItemsListFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         rvItems.layoutManager = GridLayoutManager(context, NUMBER_OF_COL)
         rvItems.adapter = itemsAdapter
 
-        itemListViewModel.getItemsLiveData().observe(this, Observer {
+        itemListViewModel.itemsLiveData.observe(this, Observer {
             when (it.status) {
                 Status.LOADING ->
                     progressLoading?.visibility = View.VISIBLE
@@ -84,5 +88,8 @@ class ItemsListFragment : Fragment() {
                 }
             }
         })
+
+        itemListViewModel.getItems()
+
     }
 }
