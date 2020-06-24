@@ -2,6 +2,7 @@ package com.example.nousapp.itemlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.example.nousapp.data.model.NousResponse
 import com.example.nousapp.OnFinishedListener
@@ -15,7 +16,7 @@ import com.example.robustaweather.data.ServiceBuilder
 class ItemsListFetcher {
 
 
-    fun getItems(): LiveData<Resource<NousResponse>> {
+    fun getItems(): MutableLiveData<Resource<NousResponse>> {
 
         val result = MediatorLiveData<Resource<NousResponse>>()
 

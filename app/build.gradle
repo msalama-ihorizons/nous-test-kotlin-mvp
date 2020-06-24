@@ -86,6 +86,8 @@ dependencies {
     // Saved state module for ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
 
+    implementation "androidx.fragment:fragment-ktx:1.2.5"
+
     //timer
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
