@@ -1,5 +1,6 @@
 package com.example.nousapp.itemlist
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.nousapp.data.ApiEmptyResponse
 import com.example.nousapp.data.ApiErrorResponse
@@ -9,11 +10,20 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class ItemListViewModel : ViewModel() {
+private const val TAG = "ItemListViewModel"
+class ItemListViewModel(serviceNumber: String) : ViewModel() {
 
     private val loadTrigger = MutableLiveData(Unit)
 
     private var  itemsListFetcher: ItemsListFetcher = ItemsListFetcher()
+
+    val itemsLiveData = MutableLiveData<Resource<NousResponse>>();
+
+
+    init {
+        Log.i(TAG, "InitView Model "+ serviceNumber)
+        getItems(serviceNumber)
+    }
 
   /*  private var itemsLiveData: LiveData<Resource<NousResponse>> =
         Transformations.switchMap(loadTrigger) {
@@ -36,7 +46,6 @@ class ItemListViewModel : ViewModel() {
         }
     }*/
 
-    val itemsLiveData = MutableLiveData<Resource<NousResponse>>();
 
 /*    fun getItems() {
         itemsLiveData.value = Resource.loading(data = null)
@@ -56,19 +65,24 @@ class ItemListViewModel : ViewModel() {
         }
     }*/
 
-    fun getItems() {
+    fun getItems(string: String) {
+
+        Log.i(TAG, "getItems "+ string)
+
         itemsLiveData.value = Resource.loading(data = null)
 
         viewModelScope.launch {
 
             try {
+
                 val result: NousResponse = itemsListFetcher.getItems()
+                itemsLiveData.value = Resource.complete(null)
+
                 itemsLiveData.value = Resource.success(result)
             } catch (e: Exception) {
+                itemsLiveData.value = Resource.complete(null)
                 itemsLiveData.value = Resource.error(e.message, null)
             }
-            itemsLiveData.value = Resource.complete(null)
-
 
         }
     }

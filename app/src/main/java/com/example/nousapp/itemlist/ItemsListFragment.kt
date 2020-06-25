@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,7 +21,8 @@ class ItemsListFragment : Fragment() {
 
     private val NUMBER_OF_COL = 4
     private var itemsAdapter: ItemsAdapter? = null
-    private lateinit var itemListViewModel: ItemListViewModel
+    private  val itemListViewModel: ItemListViewModel by
+    activityViewModels(){ MyViewModelFactory("my awesome param") }
 
     companion object {
         fun newInstance(): ItemsListFragment {
@@ -34,12 +36,11 @@ class ItemsListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        itemListViewModel = ViewModelProvider(this).get(ItemListViewModel::class.java)
 
         itemsAdapter = ItemsAdapter(activity, object : ItemsAdapter.NousRecyclerItemClickListener {
             override fun onItemClick(item: Item?) {
                //startActivity(ItemsDetailsActivity.newIntent(activity, item))
-                itemListViewModel.getItems()
+                itemListViewModel.getItems(" ")
             }
 
             override fun onItemClick(position: Int) {
@@ -67,11 +68,12 @@ class ItemsListFragment : Fragment() {
         rvItems.layoutManager = GridLayoutManager(context, NUMBER_OF_COL)
         rvItems.adapter = itemsAdapter
 
-        itemListViewModel.itemsLiveData.observe(this, Observer {
+        itemListViewModel.itemsLiveData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                Status.LOADING ->
+                Status.LOADING -> {
+                    itemsAdapter?.clear()
                     progressLoading?.visibility = View.VISIBLE
-
+                }
                 Status.SUCCESS -> {
                     itemsAdapter?.items = it?.data?.items
                 }
@@ -88,8 +90,6 @@ class ItemsListFragment : Fragment() {
                 }
             }
         })
-
-        itemListViewModel.getItems()
 
     }
 }
